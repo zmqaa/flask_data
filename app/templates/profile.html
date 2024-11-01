@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}个人中心{% endblock %}
+{% block content %}
+    <h1>个人中心</h1>
+    {% if current_user.is_authenticated %}
+            {% for file in uploaded_files %}
+                <h1>{{ file.original_file_name }}</h1>
+                <ul class="ula">
+                    <li><a href="{{ url_for('file.cleaned_display', file_id=file.id) }}">预处理</a></li>
+                    <li><a href="{{ url_for('file.analysis', file_id=file.id) }}">分析</a></li>
+                    <li><a href="{{ url_for('plot.plot', file_id=file.id) }}">画图</a></li>
+                    <li><a href="{{ url_for('file.delete', file_id=file.id) }}">删除</a></li>
+                </ul>
+            {% endfor %}
+    {% endif %}
+{% endblock %}

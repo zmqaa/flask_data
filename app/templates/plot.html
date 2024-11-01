@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}图像{% endblock %}
+{% block content %}
+    <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.x_column.label }} {{ form.x_column() }} <br>
+    {{ form.y_column.label }} {{ form.y_column() }} <br>
+    {{ form.num_rows.label }} {{ form.num_rows }} <br>
+    {{ form.chart_type.label }} {{ form.chart_type() }} <br>
+    {{ form.submit() }}
+    </form>
+
+    <div>
+        {% if fig %}
+            {{ fig | safe }}
+        {% endif %}
+    </div>
+{% endblock %}

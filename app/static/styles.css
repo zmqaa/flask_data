@@ -1,0 +1,69 @@
+
+/* 导航栏整体样式 */
+nav {
+    background-color: darkslategray; /* 导航栏背景色 */
+    padding: 10px; /* 内边距，给导航栏一些空间 */
+}
+
+/* 列表样式：移除默认的内边距和列表样式 */
+nav ul {
+    list-style: none; /* 移除列表项的圆点 */
+    padding: 0;
+    margin: 0;
+    display: flex; /* 使用 Flexbox 来让列表项水平排列 */
+    justify-content: center; /* 让导航项靠左对齐，可改为 center 或 space-between */
+}
+
+/* 列表项样式 */
+nav ul li {
+    margin-right: 50px; /* 列表项之间的间距 */
+}
+
+/* 链接样式 */
+nav ul li a {
+    text-decoration: none; /* 移除下划线 */
+    color: white; /* 设置链接颜色 */
+    padding: 10px 15px; /* 增加内边距以扩大点击区域 */
+    border-radius: 5px; /* 圆角 */
+}
+
+/* 链接悬停样式 */
+nav ul li a:hover {
+    background-color: #555; /* 鼠标悬停时的背景色 */
+}
+
+/* 列表样式：移除默认的内边距和列表样式 */
+.ula {
+    list-style: none; /* 移除列表项的圆点 */
+    padding: 0;
+    margin: 0;
+    display: flex; /* 使用 Flexbox 来让列表项水平排列 */
+    justify-content: left; /* 让导航项靠左对齐，可改为 center 或 space-between */
+}
+
+/* 列表项样式 */
+.ula li {
+    margin-right: 50px; /* 列表项之间的间距 */
+}
+
+/* 链接样式 */
+.ula li a {
+    text-decoration: none; /* 移除下划线 */
+    color: black; /* 设置链接颜色 */
+    padding: 10px 15px; /* 增加内边距以扩大点击区域 */
+    border-radius: 5px; /* 圆角 */
+    background: darkgray;
+}
+
+/* 链接悬停样式 */
+.ula li a:hover {
+    background-color: #555; /* 鼠标悬停时的背景色 */
+}
+
+
+/* 页脚整体样式 */
+footer {
+    color: black; /* 字体颜色 */
+    padding: 20px; /* 内边距 */
+    text-align: center; /* 内容居中 */
+}
