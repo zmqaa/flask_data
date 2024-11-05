@@ -4,7 +4,8 @@ from .utils import read_file
 from .utils_analysis import clean_data, remove_outliers
 from .utils_plot import *
 from app.forms import PlotForm
-
+import json
+import plotly
 
 plot_bp = Blueprint('plot', __name__)
 
@@ -74,7 +75,7 @@ def plot(file_id):
         ascending = (sort_order == 'asc')
         selected_data = selected_data.sort_values(by=sort_column, ascending=ascending)  #是asc的话就返回true
         # 绘图
-        fig = plot_data(
+        fig, fig_json = plot_data(
             selected_data,
             x_column,
             y_column,
@@ -82,7 +83,11 @@ def plot(file_id):
             color_column,
             size_column
         )
-        return render_template('plot.html', fig=fig, form=form)  # 将图形传递给模板
+        if fig is None:
+            print("Error: plot_data did not return a figure.")
+        if fig_json is None:
+            print("Error: plot_data did not return a figure.")
+        return render_template('plot.html', fig=fig, form=form, fig_json=fig_json)  # 将图形传递给模板
     else:
         print(form.errors)
     return render_template('plot.html', form=form)

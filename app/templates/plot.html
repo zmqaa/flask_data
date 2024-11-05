@@ -60,9 +60,18 @@
     {{ form.submit() }}
     </form>
 
-    <div>
-        {% if fig %}
-            {{ fig | safe }}
-        {% endif %}
-    </div>
+    <div id="plotly-div" style="width:100%;height:500px;"></div>
+    <script>
+        function renderPlotly(figJson) {
+            // 解析Python传来的JSON数据,将flask传来的json字符串转换为JavaScript对象
+            const plotData = JSON.parse(figJson);
+            // 使用解析后的数据和布局渲染图表
+            Plotly.newPlot('plotly-div', plotData.data, plotData.layout);
+        }
+
+        const pythonFigJson = '{{ fig_json | safe }}';  // 这里使用模板引擎变量
+        if (pythonFigJson) {
+            renderPlotly(pythonFigJson);
+        }
+    </script>
 {% endblock %}

@@ -1,5 +1,6 @@
 import plotly.express as px
-
+import json
+import plotly
 def plot_data(data, x_column, y_column, chart_type='line', color_column=None, size_column=None):
     if x_column not in data.columns or y_column not in data.columns:
         raise ValueError(f"不存在的列: {x_column}, {y_column}. 可选择的列: {list(data.columns)}")
@@ -32,7 +33,7 @@ def plot_data(data, x_column, y_column, chart_type='line', color_column=None, si
         xaxis=dict(showgrid=True),
         yaxis=dict(showgrid=True)
     )
-
+    fig_json = json.dumps(fig.to_dict(), cls=plotly.utils.PlotlyJSONEncoder)
     fig.show()
-
+    return fig, fig_json
 

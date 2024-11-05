@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}数据分析{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     {% with messages = get_flashed_messages() %}
