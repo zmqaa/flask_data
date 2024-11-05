@@ -1,7 +1,8 @@
 import os
 
 from flask import Blueprint, request, render_template, redirect, url_for, flash
-from .utils import save_file, allowed_file, read_file, clean_data, get_cleaned_metrics, get_original_metrics, get_descriptive_stats
+from .utils import save_file, allowed_file, read_file
+from .utils_analysis import clean_data, get_cleaned_metrics, get_original_metrics, get_descriptive_stats
 from flask_login import current_user, login_required
 from app.models import File
 from app.extensions import db

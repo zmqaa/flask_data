@@ -4,10 +4,59 @@
 {% block content %}
     <form method="POST">
     {{ form.hidden_tag() }}
-    {{ form.x_column.label }} {{ form.x_column() }} <br>
-    {{ form.y_column.label }} {{ form.y_column() }} <br>
-    {{ form.num_rows.label }} {{ form.num_rows }} <br>
-    {{ form.chart_type.label }} {{ form.chart_type() }} <br>
+
+    <div title="选择作为X轴的字段">
+        {{ form.x_column.label }} {{ form.x_column() }}
+    </div>
+
+    <div title="选择作为Y轴的字段">
+        {{ form.y_column.label }} {{ form.y_column() }}
+    </div>
+
+    <div title="选择用于调整图表中数据点大小的字段。字段必须为数值类型。">
+    {{ form.size_column.label }}
+    {{ form.size_column() }}
+    </div>
+
+    <div title="选择用于排序图表数据的字段。">
+        {{ form.sort_column.label }}
+        {{ form.sort_column() }}
+    </div>
+
+    <div title="选择数据排序的顺序：升序或降序。">
+        {{ form.sort_order.label }}
+        {{ form.sort_order }}
+    </div>
+
+    <div title="选择用于图表颜色分组的字段（可选）。可以选择任何字段作为颜色分组依据。">
+        {{ form.color_column.label }}
+        {{ form.color_column() }}
+    </div>
+
+    <div title="选择显示的行数">
+        {{ form.num_rows.label }}
+        {{ form.num_rows }}
+    </div>
+
+    <div title="选择图表类型。">
+        {{ form.chart_type.label }}
+        {{ form.chart_type() }}
+    </div>
+
+    <div title="选择不用清理异常值的列" style="max-height: 200px; overflow-y: auto;">
+        {{ form.exclude_column.label }} {{ form.exclude_column() }}
+    </div>
+
+    <div title="选择不需要的列" style="max-height: 200px; overflow-y: auto;">
+        {{ form.unneccessary_column.label }}
+        {{ form.unneccessary_column() }}
+    </div>
+
+    <div title="选择填充缺失值方式">
+        {{ form.fillna_method.label }}
+        {{ form.fillna_method() }}
+    </div>
+
     {{ form.submit() }}
     </form>
 

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>数据分析</h1>
+
+    <!-- 数据预处理表单 -->
+    <form method="post">
+        {{ data_form.hidden_tag() }}
+        <div>
+            {{ data_form.fillna_method.label }} {{ data_form.fillna_method() }}
+        </div>
+        <div>
+            {{ data_form.exclude_column.label }} {{ data_form.exclude_column(class='form-control select2') }}
+        </div>
+        <br>
+        <div>
+            {{ data_form.unneccessary_column.label }} {{ data_form.unneccessary_column() }}
+        </div>
+        <br>
+        <div>{{ data_form.submit() }}</div>
+    </form>
+
+    {% if descriptive_stats %}
+        <h2>描述性统计</h2>
+        <pre>{{ descriptive_stats|safe }}</pre>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <ul>
+        {% if uploaded_files %}
+            {% for file in uploaded_files %}
+                <li>
+                    <a href="{{ url_for('main.data_analysis', file_id=file.id) }}">{{ file.original_file_name }}</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>没有找到上传的文件。</li>
+        {% endif %}
+    </ul>
+
+{% endblock %}
