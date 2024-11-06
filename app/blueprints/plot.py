@@ -28,7 +28,7 @@ def plot(file_id):
 
     # 填充选择框
     form.x_column.choices = [(col, col) for col in columns]
-    form.y_column.choices = [(col, col) for col in columns]
+    form.y_columns.choices = [(col, col) for col in columns]
     # 当用户选择“无”时，color_column 和 size_column 的值会为 ''。在代码中，这两个字段会被转换为 None，以避免数据绘制时的 KeyError
     form.color_column.choices = [('', '无')] + [(col, col) for col in columns]
     form.size_column.choices = [('', '无')] + [(col, col) for col in numeric_columns]
@@ -46,15 +46,19 @@ def plot(file_id):
         # 获取表单输入的
         # 数据预处理
         fillna_method = form.fillna_method.data
+        print(fillna_method)
         unneccessary_columns = form.unneccessary_column.data
         excluded_columns = form.exclude_column.data
         cleaned_data = clean_data(data, unneccessary_columns, excluded_columns, fillna_method)
+        # 启用移动平均
+        use_moving_average = form.use_moving_average.data
+        moving_average_window = form.moving_average_window.data
         # 其他
         chart_type = form.chart_type.data
         num_rows = form.num_rows.data
         # 根据图表所需选择字段
         x_column = form.x_column.data
-        y_column = form.y_column.data
+        y_columns = form.y_columns.data
         # 在视图函数中，我们用 .data or None 的方式确保如果用户选择了“无”，下拉框字段的值会为 None，而不是空字符串。这样做可以避免 plot_data() 函数试图查找不存在的列时抛出 KeyError 错误。
         color_column = form.color_column.data or None
         size_column = form.size_column.data or None
@@ -78,10 +82,12 @@ def plot(file_id):
         fig, fig_json = plot_data(
             selected_data,
             x_column,
-            y_column,
+            y_columns,
             chart_type,
             color_column,
-            size_column
+            size_column,
+            use_moving_average,
+            moving_average_window or 5
         )
         if fig is None:
             print("Error: plot_data did not return a figure.")

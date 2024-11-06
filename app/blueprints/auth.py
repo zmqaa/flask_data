@@ -17,7 +17,7 @@ def login():
             flash('登录成功')
             return redirect(url_for('main.index'))
         else:
-            flash('用户不存在')
+            flash('用户或密码错误')
             return redirect(url_for('auth.login'))
     return render_template('login.html', form=form)
 

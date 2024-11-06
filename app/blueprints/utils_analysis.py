@@ -1,7 +1,10 @@
 import pandas as pd
 
 
-def fill_missing_values(data, method='ffill'):
+def fill_missing_values(data, method='none'):
+    if method == 'none':
+        return data
+
     if method == 'ffill':
         data = data.fillna(method='ffill')
     elif method == 'bfill':
@@ -16,6 +19,37 @@ def fill_missing_values(data, method='ffill'):
     return data
 
 
+def detect_and_convert_dates(data, date_columns=None):
+    """
+    检测并转换日期列
+    Args:
+        data: DataFrame
+        date_columns: 指定的日期列,可以是字符串或列表,默认None(自动检测)
+    Returns:
+        处理后的DataFrame
+    """
+    if date_columns is None:    # 为None时，自动检测日期列
+        date_columns = []
+        for col in data.columns:
+            if data[col].dtype == 'object' and any(
+                    keyword in col.lower() for keyword in ['date', 'time', 'day', '日期', '时间']):
+                try:
+                    pd.to_datetime(data[col].iloc[0:100], errors='raise')   # 尝试将每一列的钱一百行转化为datetime类型
+                    date_columns.append(col)    # 成功的话就把对应列加到日期列里
+                except:
+                    continue    # 失败的话跳过这一列继续下一列
+    elif isinstance(date_columns, str):
+        date_columns = [date_columns]
+
+    for col in date_columns:
+        try:
+            data[col] = pd.to_datetime(data[col], errors='coerce')  # 表示当转换失败时，将对应的值设为NaT（Not a Time）
+        except Exception as e:  # 若整列转换失败打印失败信息
+            print(f"警告: 列 {col} 转换日期格式失败: {str(e)}")
+
+    return data
+
+
 def remove_outliers(data, columns):
     for column in columns:
         q1 = data[column].quantile(0.25)
@@ -25,7 +59,7 @@ def remove_outliers(data, columns):
     return data
 
 
-def clean_data(data, unneccessary_columns=None, outlier_columns=None, fillna_method='ffill'):
+def clean_data(data, unneccessary_columns=None, outlier_columns=None, fillna_method='ffill', date_columns=None):
     # 首先确保数据是DataFrame格式
     if isinstance(data, dict):
         data = pd.DataFrame(data)
@@ -38,8 +72,7 @@ def clean_data(data, unneccessary_columns=None, outlier_columns=None, fillna_met
     data = fill_missing_values(data, method=fillna_method)
 
     # 转换数据类型（示例：将日期列转换为日期格式）
-    if 'date_column' in data.columns:
-        data['date_column'] = pd.to_datetime(data['date_column'], errors='coerce')
+    data = detect_and_convert_dates(data, date_columns)
 
     # 去除不必要的列
     if unneccessary_columns:

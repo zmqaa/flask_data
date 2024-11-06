@@ -5,12 +5,22 @@
     <form method="POST">
     {{ form.hidden_tag() }}
 
+    <div title="选择是否启用移动平均">
+        {{ form.use_moving_average.label }}
+        {{ form.use_moving_average }}
+    </div>
+    <div title="选择几个数据点位一组">
+        {{ form.moving_average_window.label }}
+        {{ form.moving_average_window }}
+    </div>
     <div title="选择作为X轴的字段">
-        {{ form.x_column.label }} {{ form.x_column() }}
+        {{ form.x_column.label }}<br>
+        {{ form.x_column() }}
     </div>
 
     <div title="选择作为Y轴的字段">
-        {{ form.y_column.label }} {{ form.y_column() }}
+        {{ form.y_columns.label }} <small>(折线图可选多个y轴)</small> <br>
+        {{ form.y_columns() }}
     </div>
 
     <div title="选择用于调整图表中数据点大小的字段。字段必须为数值类型。">
@@ -44,11 +54,13 @@
     </div>
 
     <div title="选择不用清理异常值的列" style="max-height: 200px; overflow-y: auto;">
-        {{ form.exclude_column.label }} {{ form.exclude_column() }}
+        {{ form.exclude_column.label }}
+        <br>
+        {{ form.exclude_column() }}
     </div>
 
     <div title="选择不需要的列" style="max-height: 200px; overflow-y: auto;">
-        {{ form.unneccessary_column.label }}
+        {{ form.unneccessary_column.label }}<br>
         {{ form.unneccessary_column() }}
     </div>
 
